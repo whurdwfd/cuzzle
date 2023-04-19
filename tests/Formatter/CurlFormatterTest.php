@@ -1,5 +1,6 @@
 <?php
 
+use GuzzleHttp\Psr7\Utils;
 use Namshi\Cuzzle\Formatter\CurlFormatter;
 use GuzzleHttp\Psr7\Request;
 
@@ -69,7 +70,7 @@ class CurlFormatterTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals("curl 'http://example.local?foo=bar'", $curl);
 
-        $body = \GuzzleHttp\Psr7\stream_for(http_build_query(['foo' => 'bar', 'hello' => 'world'], '', '&'));
+        $body = Utils::streamFor(http_build_query(['foo' => 'bar', 'hello' => 'world'], '', '&'));
 
         $request = new Request('GET', 'http://example.local', [], $body);
         $curl    = $this->curlFormatter->format($request);
@@ -79,7 +80,7 @@ class CurlFormatterTest extends \PHPUnit\Framework\TestCase
 
     public function testPOST()
     {
-        $body = \GuzzleHttp\Psr7\stream_for(http_build_query(['foo' => 'bar', 'hello' => 'world'], '', '&'));
+        $body = Utils::streamFor(http_build_query(['foo' => 'bar', 'hello' => 'world'], '', '&'));
 
         $request = new Request('POST', 'http://example.local', [], $body);
         $curl    = $this->curlFormatter->format($request);
@@ -114,7 +115,7 @@ class CurlFormatterTest extends \PHPUnit\Framework\TestCase
 
     public function testPUT()
     {
-        $request = new Request('PUT', 'http://example.local', [], \GuzzleHttp\Psr7\stream_for('foo=bar&hello=world'));
+        $request = new Request('PUT', 'http://example.local', [], Utils::streamFor('foo=bar&hello=world'));
         $curl    = $this->curlFormatter->format($request);
 
         $this->assertStringContainsString("-d 'foo=bar&hello=world'", $curl);
@@ -123,7 +124,7 @@ class CurlFormatterTest extends \PHPUnit\Framework\TestCase
 
     public function testProperBodyReading()
     {
-        $request = new Request('PUT', 'http://example.local', [], \GuzzleHttp\Psr7\stream_for('foo=bar&hello=world'));
+        $request = new Request('PUT', 'http://example.local', [], Utils::streamFor('foo=bar&hello=world'));
         $request->getBody()->getContents();
 
         $curl    = $this->curlFormatter->format($request);
@@ -139,7 +140,7 @@ class CurlFormatterTest extends \PHPUnit\Framework\TestCase
     {
         // clean input of null bytes
         $body = str_replace(chr(0), '', $body);
-        $request = new Request('POST', 'http://example.local', $headers, \GuzzleHttp\Psr7\stream_for($body));
+        $request = new Request('POST', 'http://example.local', $headers, Utils::streamFor($body));
 
         $curl = $this->curlFormatter->format($request);
 

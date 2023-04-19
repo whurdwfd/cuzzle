@@ -33,7 +33,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
     public function testPOST()
     {
-        $request = new Request('POST', 'http://local.example', [], Psr7\stream_for('foo=bar&hello=world'));
+        $request = new Request('POST', 'http://local.example', [], Psr7\Utils::streamFor('foo=bar&hello=world'));
         $curl    = $this->curlFormatter->format($request);
 
         $this->assertStringContainsString("-d 'foo=bar&hello=world'", $curl);
@@ -41,7 +41,7 @@ class RequestTest extends \PHPUnit\Framework\TestCase
 
     public function testPUT()
     {
-        $request = new Request('PUT', 'http://local.example', [], Psr7\stream_for('foo=bar&hello=world'));
+        $request = new Request('PUT', 'http://local.example', [], Psr7\Utils::streamFor('foo=bar&hello=world'));
         $curl    = $this->curlFormatter->format($request);
 
         $this->assertStringContainsString("-d 'foo=bar&hello=world'", $curl);

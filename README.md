@@ -6,9 +6,7 @@ This library lets you dump a Guzzle request to a cURL command for debug and log 
 
 ## Prerequisites
 
-This library needs PHP 7.3+.
-
-It has been tested using PHP7.3 to PHP7.4
+This library needs PHP 8.0+.
 
 ## Installation
 
