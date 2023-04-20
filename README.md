@@ -1,8 +1,8 @@
 # Cuzzle, cURL command from Guzzle requests
 
-[![Build Status](https://travis-ci.org/namshi/cuzzle.svg?branch=master)](https://travis-ci.org/namshi/cuzzle)
-
 This library lets you dump a Guzzle request to a cURL command for debug and log purpose.
+
+This is a fork of namshi/cuzzle that has been updated to be compatible with PHP 8.0+
 
 ## Prerequisites
 
@@ -12,6 +12,17 @@ This library needs PHP 8.0+.
 
 You can install the library directly with composer:
 
+
+Add the following to your composer.json
+```
+"repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/whurdwfd/cuzzle.git"
+    }
+  ]
+```
+Then:
 ```
 composer require namshi/cuzzle
 ```
